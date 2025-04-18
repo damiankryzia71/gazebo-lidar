@@ -17,3 +17,5 @@ set(plugins
   lidar_gst_plugin
 )
 ```
+### 3. Attach the LiDAR sensor to a simulated model.
+The `lidar.sdf` file contains the sensor element with the plugin attached. Adjust the pose as necessary.
