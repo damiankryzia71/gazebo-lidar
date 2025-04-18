@@ -1,5 +1,5 @@
 <sensor name='lidar_sensor' type='ray'>
-  <pose>0 0 -0.004645 0 -0 0</pose>
+  <pose>0.0 0 -0.162 0 0 0</pose>
   <always_on>1</always_on>
   <visualize>1</visualize>
   <update_rate>30</update_rate>
