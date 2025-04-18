@@ -18,7 +18,7 @@
       <resolution>0.01</resolution>
     </range>
   </ray>
-  <plugin name='lidar_gst_plugin' filename='build/liblidar_gst_plugin.so'>
+  <plugin name='lidar_gst_plugin' filename='liblidar_gst_plugin.so'>
     <topicName>/gazebo/default/lidar_model/lidar_link/lidar_sensor/scan</topicName>
     <udpHost>127.0.0.1</udpHost>
     <udpPorts>5600,5601</udpPorts>
