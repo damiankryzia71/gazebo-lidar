@@ -20,3 +20,9 @@ set(plugins
 ### 3. Attach the LiDAR sensor to a simulated model.
 The `lidar.sdf` file contains the sensor element with the plugin attached. Adjust the pose, topic name, host, and ports as necessary.
 Attach it to any model and rebuild the PX4 simulation using that model. The LiDAR data should now start streaming.
+
+### 4. Confirm data is being streamed.
+To confirm that the LiDAR data is being streamed, read the GStreamer pipeline by opening a new terminal and running:
+```bash
+gst-launch-1.0 -v udpsrc port=5601 caps="application/octet-stream" ! fakesink dump=true
+```
