@@ -110,28 +110,67 @@ namespace gazebo
             {
                 const gazebo::msgs::LaserScan &scan = msg->scan();
                 const int n = scan.ranges_size();
-
-                GstBuffer *buffer = gst_buffer_new_allocate(nullptr, n * sizeof(float), nullptr);
+            
+                if (n == 0)
+                {
+                    std::cerr << "Empty scan received, skipping." << std::endl;
+                    return;
+                }
+            
+                // Allocate buffer for (x, y, z) per point
+                GstBuffer *buffer = gst_buffer_new_allocate(nullptr, n * 3 * sizeof(float), nullptr);
+                if (!buffer)
+                {
+                    std::cerr << "Failed to allocate GStreamer buffer." << std::endl;
+                    return;
+                }
+            
                 GstMapInfo map;
-
                 if (!gst_buffer_map(buffer, &map, GST_MAP_WRITE))
                 {
                     std::cerr << "Failed to map GStreamer buffer." << std::endl;
                     gst_buffer_unref(buffer);
                     return;
                 }
-
-                memcpy(map.data, scan.ranges().data(), n * sizeof(float));
-
+            
+                // Fill buffer with (x, y, z) points
+                const float angle_min = scan.angle_min();
+                const float angle_step = scan.angle_step();
+            
+                for (int i = 0; i < n; ++i)
+                {
+                    float r = scan.ranges(i);
+            
+                    // Handle invalid range values if necessary
+                    if (r < scan.range_min() || r > scan.range_max())
+                    {
+                        // Mark invalid points as NaN (or zeros depending on your needs)
+                        ((float*)map.data)[i * 3 + 0] = std::numeric_limits<float>::quiet_NaN();
+                        ((float*)map.data)[i * 3 + 1] = std::numeric_limits<float>::quiet_NaN();
+                        ((float*)map.data)[i * 3 + 2] = std::numeric_limits<float>::quiet_NaN();
+                        continue;
+                    }
+            
+                    float angle = angle_min + i * angle_step;
+                    float x = r * cosf(angle);
+                    float y = r * sinf(angle);
+                    float z = 0.0f; // 2D laser; if it's a 3D scan, modify accordingly
+            
+                    ((float*)map.data)[i * 3 + 0] = x;
+                    ((float*)map.data)[i * 3 + 1] = y;
+                    ((float*)map.data)[i * 3 + 2] = z;
+                }
+            
                 gst_buffer_unmap(buffer, &map);
-
+            
+                // Push buffer into GStreamer appsrc
                 GstFlowReturn ret;
                 g_signal_emit_by_name(this->appsrc, "push-buffer", buffer, &ret);
                 gst_buffer_unref(buffer);
-
+            
                 if (ret != GST_FLOW_OK)
                     std::cerr << "Failed to push buffer to appsrc\n";
-            }               
+            }                          
 
         private:
             sensors::SensorPtr sensor;
