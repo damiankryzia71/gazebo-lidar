@@ -28,3 +28,11 @@ To confirm that the LiDAR data is being streamed, read the GStreamer pipeline by
 ```bash
 gst-launch-1.0 -v udpsrc port=5601 caps="application/octet-stream" ! fakesink dump=true
 ```
+
+### 5. Visualize the LiDAR data
+Use the included `lidar_visualization_from_gst.cpp` file to visualize the point cloud data with OpenCV.
+Use the included `CMakeLists.txt`.
+Run the file with your specified UDP port number:
+```bash
+./lidar_visualization_from_gst 5601
+```
