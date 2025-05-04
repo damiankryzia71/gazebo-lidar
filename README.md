@@ -20,7 +20,7 @@ set(plugins
 )
 ```
 ### 3. Attach the LiDAR sensor to a simulated model.
-The `lidar.sdf` file contains the sensor element with the plugin attached. Adjust the pose, topic name, host, and ports as necessary.
+The `2d_lidar.sdf` and `3d_lidar.sdf` files contain the sensor elements with the plugin attached. Adjust the pose, topic name, host, and ports as necessary.
 Attach it to any model and rebuild the PX4 simulation using that model. The LiDAR data should now start streaming.
 
 ### 4. Confirm data is being streamed.
