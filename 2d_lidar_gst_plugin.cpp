@@ -138,7 +138,7 @@ namespace gazebo
                     return;
                 }
                 
-                // New buffer fill logic - send array of floats in the format [count, angle_min, angle_step]
+                // New buffer fill logic - send array of floats in the format [count, angle_min, angle_step, ranges]
                 float *data = reinterpret_cast<float*>(map.data);
 
                 data[0] = static_cast<float>(count);
