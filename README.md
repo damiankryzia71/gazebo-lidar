@@ -1,4 +1,5 @@
-# Steps to simulate a 2D or 3D LiDAR in Gazebo Classic, stream and process the binary data using a GStreamer pipeline (PX4 Simulation).
+# Steps to simulate a 3D LiDAR in Gazebo Classic, stream and process the binary data using a GStreamer pipeline (PX4 Simulation).
+## The steps to achieve the same result with a 2D LiDAR can be found in the `2D` branch of this repository.
 
 ### 1. Insert the appropriate `_lidar_gst_plugin.cpp` source file into the `PX4-Autopilot/Tools/simulation/gazebo-classic/sitl_gazebo-classic/src/` directory.
 The plugin subscribes to the LiDAR topic created by Gazebo and creates a GStreamer pipeline to stream the LiDAR metadata and ranges as raw binary data.
