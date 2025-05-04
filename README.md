@@ -33,6 +33,7 @@ gst-launch-1.0 -v udpsrc port=5602 caps="application/octet-stream" ! fakesink du
 ### 5. Visualize the LiDAR data
 Use the included `3d_lidar_visualization_from_gst.cpp` file to visualize the point cloud data with OpenCV.
 Use the included `CMakeLists.txt`.
+This program includes the `LoadPointCloudGst` function. This function uses the streamed metadata and ranges to compute 3D (X, Y, Z) points and stores them in a `cv::Mat` object. This is an efficient way to store point cloud data and in this case we're using it for visualization.
 Run the file with your specified UDP port number:
 ```bash
 ./3d_lidar_visualization_from_gst 5602
