@@ -24,7 +24,7 @@ set(plugins
 The `2d_lidar.sdf` file contains the sensor element with the plugin attached. Adjust the pose, topic name, host, and ports as necessary.
 Attach it to any model and rebuild the PX4 simulation using that model. The LiDAR data should now start streaming.
 ```sdf
-<sensor name='lidar_sensor' type='ray'>
+<sensor name='lidar_sensor' type='gpu_ray'>
   <pose>0.0 0 -0.162 0 0 0</pose>
   <always_on>1</always_on>
   <visualize>1</visualize>
