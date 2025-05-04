@@ -23,6 +23,40 @@ set(plugins
 ### 3. Attach the LiDAR sensor to a simulated model.
 The `3d_lidar.sdf` file contains the sensor element with the plugin attached. Adjust the pose, topic name, host, and ports as necessary.
 Attach it to any model and rebuild the PX4 simulation using that model. The LiDAR data should now start streaming.
+```sdf
+      <sensor name='lidar_sensor' type='gpu_ray'>
+        <pose>0.0 0 -0.162 0 0 0</pose>
+        <always_on>1</always_on>
+        <visualize>1</visualize>
+        <update_rate>30</update_rate>
+        <ray>
+          <scan>
+            <horizontal>
+              <samples>1080</samples>
+              <resolution>1</resolution>
+              <min_angle>-3.14159</min_angle>
+              <max_angle>3.14159</max_angle>
+            </horizontal>
+            <vertical>
+              <samples>8</samples>
+              <resolution>1</resolution>
+              <min_angle>-0.2618</min_angle>
+              <max_angle>0.2618</max_angle>
+            </vertical>
+          </scan>
+          <range>
+            <min>0.05</min>
+            <max>30</max>
+            <resolution>0.01</resolution>
+          </range>
+        </ray>
+        <plugin name="lidar_gst_plugin" filename="liblidar_gst_plugin.so">
+          <topicName>/gazebo/default/typhoon_h480/cgo3_camera_link/lidar_sensor/scan</topicName>
+          <udpHost>127.0.0.1</udpHost>
+          <udpPorts>5602</udpPorts>
+        </plugin>
+      </sensor>
+```
 
 ### 4. Confirm data is being streamed.
 To confirm that the LiDAR data is being streamed, read the GStreamer pipeline by opening a new terminal and running (adjust the port as necessary):
