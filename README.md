@@ -62,7 +62,9 @@ gst-launch-1.0 -v udpsrc port=5602 caps="application/octet-stream" ! fakesink du
 Use the included `2d_lidar_visualization_from_gst.cpp` file to visualize the point cloud data with OpenCV.
 Use the included `CMakeLists.txt`.
 
-This program includes the `LoadPointCloudGst` function. This function uses the streamed metadata and ranges to compute 2D (X, Y) points and stores them in a `cv::Mat` object. This is an efficient way to store point cloud data and in this case we're using it for visualization.
+This program includes code to set up and read data from the GStreamer pipeline created by the Gazebo plugin.
+
+This program also includes the `LoadPointCloudGst` function. This function uses the streamed metadata and ranges to compute 2D (X, Y) points and stores them in a `cv::Mat` object. This is an efficient way to store point cloud data and in this case we're using it for visualization.
 ```cpp
 bool LoadPointCloudGst(cv::Mat &pcd, GstElement *appsink)
 {
